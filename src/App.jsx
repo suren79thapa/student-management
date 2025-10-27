@@ -1,11 +1,23 @@
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
-import { Toaster } from "react-hot-toast";
+import AddStudent from "./pages/AddStudent";
+import EditStudent from "./pages/EditStudent";
 
 export default function App() {
-  return (
-    <div>
-      <Toaster position="top-right" />
-      <Dashboard />
-    </div>
-  );
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Dashboard />, // Dashboard page
+    },
+    {
+      path: "/add-student",
+      element: <AddStudent />, // Add student page
+    },
+    {
+      path: "/edit-student/:id",
+      element: <EditStudent />, // Edit student page
+    },
+  ]);
+
+  return <RouterProvider router={router} />;
 }

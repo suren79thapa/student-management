@@ -1,9 +1,8 @@
 import { Formik } from "formik";
 import * as Yup from "yup";
 import toast from "react-hot-toast";
-import { subjects } from "../data/subject"; // Array of 10 subjects
+import { subjects } from "../data/subject";
 
-// Yup validation schema
 const studentSchema = Yup.object({
   name: Yup.string().required("Name is required"),
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -19,8 +18,8 @@ const studentSchema = Yup.object({
 
 export default function StudentForm({ initialValues, onSubmit, onCancel }) {
   return (
-    <div className="p-5 bg-white rounded-lg shadow max-w-md mx-auto">
-      <h2 className="text-xl font-bold mb-5 text-center">
+    <div className="p-5 bg-white rounded-lg shadow max-w-md w-full">
+      <h2 className="text-xl font-bold mb-5">
         {initialValues ? "Edit Student" : "Add Student"}
       </h2>
 
@@ -47,7 +46,6 @@ export default function StudentForm({ initialValues, onSubmit, onCancel }) {
           setFieldValue,
         }) => (
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Name */}
             <div>
               <label className="block mb-1 font-medium">Name</label>
               <input
@@ -62,7 +60,6 @@ export default function StudentForm({ initialValues, onSubmit, onCancel }) {
               )}
             </div>
 
-            {/* Email */}
             <div>
               <label className="block mb-1 font-medium">Email</label>
               <input
@@ -77,7 +74,6 @@ export default function StudentForm({ initialValues, onSubmit, onCancel }) {
               )}
             </div>
 
-            {/* Course */}
             <div>
               <label className="block mb-1 font-medium">Course</label>
               <select
@@ -98,7 +94,6 @@ export default function StudentForm({ initialValues, onSubmit, onCancel }) {
               )}
             </div>
 
-            {/* Age */}
             <div>
               <label className="block mb-1 font-medium">Age</label>
               <input
@@ -113,8 +108,7 @@ export default function StudentForm({ initialValues, onSubmit, onCancel }) {
               )}
             </div>
 
-            {/* Buttons */}
-            <div className="flex justify-end gap-3 mt-4">
+            <div className="flex justify-end gap-2 mt-4">
               <button
                 type="button"
                 onClick={onCancel}

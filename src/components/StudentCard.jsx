@@ -1,20 +1,24 @@
-export default function StudentCard({ student, onEdit, onDelete }) {
+import { NavLink } from "react-router-dom";
+
+export default function StudentCard({ student, onDelete }) {
   return (
-    <div className="bg-white p-6 rounded-lg shadow hover:shadow-xl transition transform hover:-translate-y-1">
-      <div className="font-bold text-lg">{student.name}</div>
-      <div className="text-gray-500 text-sm">{student.email}</div>
-      <div className="mt-2 font-medium">{student.course}</div>
-      <div className="mt-1 text-gray-600">Age: {student.age}</div>
-      <div className="mt-4 flex space-x-2">
-        <button
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          onClick={onEdit}
+    <div className="p-4 bg-white rounded-lg shadow space-y-2">
+      <h3 className="font-semibold">{student.name}</h3>
+      <p>Email: {student.email}</p>
+      <p>Course: {student.course}</p>
+      <p>Age: {student.age}</p>
+
+      <div className="flex justify-end gap-2 mt-2">
+        <NavLink
+          to={`/edit-student/${student.id}`}
+          state={{ student }}
+          className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
         >
           Edit
-        </button>
+        </NavLink>
         <button
-          className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
           onClick={onDelete}
+          className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
         >
           Delete
         </button>
