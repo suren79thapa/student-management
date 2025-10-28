@@ -1,14 +1,14 @@
 // src/api/studentApi.js
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { baseUrl } from "./apiUrl.js"; // import base URL
+import { baseUrl } from "./apiUrl.js";
 
 export const studentApi = createApi({
   reducerPath: "studentApi",
-  baseQuery: fetchBaseQuery({ baseUrl }), // use imported baseUrl
+  baseQuery: fetchBaseQuery({ baseUrl }),
   tagTypes: ["Student"],
   endpoints: (builder) => ({
     getStudents: builder.query({
-      query: () => "/",
+      query: ({ page = 1, limit = 6 } = {}) => `/?page=${page}&limit=${limit}`,
       providesTags: ["Student"],
     }),
     getStudentById: builder.query({

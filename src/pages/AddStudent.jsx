@@ -1,19 +1,22 @@
+import React from "react";
+import { useAddStudentMutation } from "../api/studentApi";
 import { useNavigate } from "react-router-dom";
 import StudentForm from "../components/StudentForm";
 
 export default function AddStudent() {
+  const [addStudent] = useAddStudentMutation();
   const navigate = useNavigate();
 
-  const handleAdd = (student) => {
-    console.log("New Student:", student);
-    navigate("/");
+  const handleSubmit = async (values) => {
+    await addStudent(values).unwrap();
+    navigate("/"); // go back to dashboard
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
+    <div className="max-w-md mx-auto mt-10">
       <StudentForm
-        initialValues={null}
-        onSubmit={handleAdd}
+        initialValues={null} // null for adding
+        onSubmit={handleSubmit}
         onCancel={() => navigate("/")}
       />
     </div>

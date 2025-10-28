@@ -1,29 +1,38 @@
-import { useNavigate, useLocation } from "react-router-dom";
+// src/pages/EditStudent.jsx
+import React from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import {
+  useGetStudentByIdQuery,
+  useUpdateStudentMutation,
+} from "../api/studentApi";
 import StudentForm from "../components/StudentForm";
 import toast from "react-hot-toast";
 
 export default function EditStudent() {
+  const { id } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
-  const student = location.state?.student; // Get student from NavLink state
+  const { data, isLoading, isError } = useGetStudentByIdQuery(id);
+  const [updateStudent] = useUpdateStudentMutation();
 
-  if (!student) {
-    // If no student data is passed, go back to dashboard
-    navigate("/");
-    return null;
-  }
+  if (isLoading) return <p className="text-center mt-10">Loading student...</p>;
+  if (isError || !data?.student)
+    return <p className="text-center mt-10 text-red-500">Student not found!</p>;
 
-  const handleUpdate = (updatedStudent) => {
-    console.log("Updated Student:", updatedStudent);
-    toast.success("Student updated successfully!");
-    navigate("/"); // Go back to dashboard after editing
+  const handleSubmit = async (values) => {
+    try {
+      await updateStudent({ id, ...values }).unwrap();
+      toast.success("Student updated successfully!");
+      navigate("/"); // back to dashboard
+    } catch (err) {
+      toast.error(err?.data?.message || "Failed to update student");
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
+    <div className="max-w-md mx-auto mt-10">
       <StudentForm
-        initialValues={student}
-        onSubmit={handleUpdate}
+        initialValues={data.student} // prefill from API
+        onSubmit={handleSubmit}
         onCancel={() => navigate("/")}
       />
     </div>
